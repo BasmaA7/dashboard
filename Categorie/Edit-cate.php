@@ -1,6 +1,6 @@
    
  <?php include_once "../connexion/conx.php"; 
- $id=$_GET['updateID'];
+ $id=$_GET[' editID'];
 if(isset($_POST['submit'])){
 
   $FullName=$_POST['FullName'];

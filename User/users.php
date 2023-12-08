@@ -11,7 +11,8 @@ if(isset($_POST['submit'])){
   values ('$FullName','$password','$email')";
   $res=mysqli_query($conx,$sql);
   if($res){
-    echo 'DB insert success fully';
+    echo 'DB insert successfully';
+    header('location:Afficher-user.php');
   }
   else{
     die(mysqli_connect_error($conx));
@@ -41,7 +42,7 @@ if(isset($_POST['submit'])){
         rel="stylesheet">
         <link rel="stylesheet" href="../dist/output.css" />
         <title>Dashboard - peoplepertask</title>
-    <link href="dist/output.css" rel="stylesheet">
+    <link href="../dist/output.css" rel="stylesheet">
     <title>Dashboard - peoplepertask</title>
 </head>
 

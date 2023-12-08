@@ -1,3 +1,53 @@
+
+<?php
+include "../connexion/conx.php";
+
+
+session_start();
+
+if (isset($_POST["login"])) {
+     
+    $password = $_POST['Password'];
+    $email = $_POST['Email'];
+   
+     $query="SELECT * FROM user WHERE Email = ?";
+    $stmt = mysqli_prepare($conx,$query);
+    mysqli_stmt_bind_param($stmt,'s',$email);
+    mysqli_execute($stmt);
+    $result=mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($result)>0){
+            $row=mysqli_fetch_assoc($result);
+            $id_user= $row['ID'];
+            $role=$row['role'];
+            $password_database=$row['Password'];
+            if(password_verify($password,$password_database)){
+                if($role=='admin'){
+                  $_SESSION['role']=$role;
+                  $_SESSION['id']=$id_user;
+                 header("Location:../dashboard.php");
+                }else {
+                  $_SESSION['role']=$role;
+                  $_SESSION['id']=$id_user;
+                  header("Location:./index.php");
+                }
+
+            }else{
+              echo "password incorrecte";
+            }
+    }else{
+      echo "email invalid";
+    }
+    
+}
+
+
+
+?>
+
+  
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,213 +57,28 @@
   <link rel="stylesheet" href="../dist/contact.css">
 </head>
 <body class=" bg-gray-100 dark: dark:bg-gray-900 ">
-  <header>
-    <nav
-      class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800"
-    >
-      <div
-        class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl"
-      >
-        <a href="../src/index.html" class="flex items-center">
-          <img
-            src="../images/logo.webp"
-            class="mr-3 h-6 sm:h-9"
-            alt="peoplepertask Logo"
-          />
-          <span class="self-center hidden sm:block lg:text-xl font-semibold whitespace-nowrap dark:text-white">People Per Tasks</span>
-        </a>
-        <div class="flex items-center lg:order-2">
-          <a
-            href="../src/signin.html"
-            class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-            >Log in</a
-          >
-          <a
-            href="../src/signup.html"
-            class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-3xl text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-            >Sign up</a
-          >
-          <button
-            id="theme-toggle"
-            type="button"
-            class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
-          >
-            <svg
-              id="theme-toggle-dark-icon"
-              class="hidden w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-              ></path>
-            </svg>
-            <svg
-              id="theme-toggle-light-icon"
-              class="hidden w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
-          <button
-            data-collapse-toggle="mobile-menu-2"
-            type="button"
-            class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="mobile-menu-2"
-            aria-expanded="false"
-          >
-            <span class="sr-only">Open main menu</span>
-            <svg
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <svg
-              class="hidden w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
-        </div>
-        <div
-          class="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1"
-          id="mobile-menu-2"
-        >
-          <ul
-            class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0"
-          >
-            <li>
-              <a
-                href="./index.html"
-                class="block py-2 pr-4 pl-3 text-primary-500 rounded lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
-                aria-current="page"
-                >Home
-              </a>
-            </li>
-            <li>
-              <button
-                id="dropdownDefaultButton"
-                data-dropdown-toggle="dropdown"
-                class="inline-flex py-2 pr-4 pl-3 cursor-pointer text-primary-500 rounded lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white"
-                type="button"
-              >
-                Company
-                <svg
-                  class="w-2.5 h-2.5 ml-2.5 mt-2.5"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-              </button>
-              <!-- Dropdown menu -->
-              <div
-                id="dropdown"
-                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-              >
-                <ul
-                  class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                  aria-labelledby="dropdownDefaultButton"
-                >
-                  <li>
-                    <a
-                      href="../src/about.html#tab-profile"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Who we are</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="../src/about.html#tab-settings"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Our Value System</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="../src/about.html#tab-options"
-                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                      >Meet The Team</a
-                    >
-                  </li>
-                </ul>
-                <div class="py-2">
-                  <a
-                    href="../src/pricing.html"
-                    class="font-bold block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >Pricing</a
-                  >
-                </div>
-            <li>
-              <a
-                href="./marketplace.html"
-                class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >Marketplace</a
-              >
-            </li>
-            <li>
-              <a
-                href="./contact.html"
-                class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"
-                >Contact</a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  </header>
+ <?php include "../nav_b.php";?>
  
   <section class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md  dark:bg-gray-900 ">
     <div class="py-8 lg:py-16 px-4  w-[70%] bg-white border rounded-3xl dark: dark:bg-gray-700 m-80  ">
       <h2 class=" mb-16 text-6xl tracking-tight font-SemiBold text-center text-gray-900 dark:text-white font-semibold"> Log <span class="text-orange-500 font-semibold">In</span> </h2>
       <p class="m-4 text-dark text-2xl dark:text-white ">Welcome back</p>
  <!--FORM-->
-      <form action="#" class="space-y-8 flex flex-col justify-evenly" id="form">
+      <form method='post' class="space-y-8 flex flex-col justify-evenly" id="form">
         <div>
-          <input type="email" id="email"
+          <input type="email" id="email" name='Email'
             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light "
             placeholder="Email" >
             <span class="text-red-600 hidden" id="email-error">No valid</span>
         </div>
         <div>
-          <input type="password" id="password"
+          <input type="password" id="password" name=Password
             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
             placeholder="Password" >
             <span class="text-red-600 hidden" id="password-error">No valid</span>
         </div>
         <div class="flex justify-center ">
-          <div> <button type="submit"
+          <div> <button type="submit" name='login'
               class="py-3 px-5 text-sm font-medium text-center text-white rounded-3xl bg-orange-600 w-60 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800   ">login</button>
           </div>
 
@@ -417,5 +282,6 @@
 <script src="../js/theme.js"></script>
 <script src="/js/signin.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
-
+ 
 </html>
+ 

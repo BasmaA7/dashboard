@@ -1,5 +1,6 @@
 <?php 
     include_once "connexion/conx.php"; 
+    
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,21 +11,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="keywords" content="HTML, CSS, Youcode, tailwindCSS, Youssoufia">
     <meta name="author" content="Soulaiman Bouhlal, ZAID MOUMNI">
-    <link rel="icon" type="image/x-icon" href="../images/logo.webp">
+    <link rel="icon" type="../image/x-icon" href="images/logo.webp">
     <meta name="description" content="this page is an html project was given in a bootcamp">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;600;700;800&display=swap"
         rel="stylesheet">
-        <link rel="stylesheet" href="../dist/output.css" />
+        <link rel="stylesheet" href="dist/output.css" />
         <title>Dashboard - peoplepertask</title>
-    <link href="../dist/output.css" rel="stylesheet">
+    <link href="dist/output.css" rel="stylesheet">
     <title>Dashboard - peoplepertask</title>
 </head>
 
 <body class="dark:bg-gray-900">
 
-    <?php include "../header_aside.php"; ?>
+    <?php include "header_aside.php"; ?>
 
     <main class=" mt-14 p-12 ml-0 smXl:ml-64  dark:border-gray-700">
 
@@ -39,13 +40,15 @@
                                 stroke="#00373E" stroke-width="2" stroke-linejoin="round" />
                         </svg>
                     </span>
+        
                 </div>
+              
                 <div class="data_container flex justify-between">
                     <div class="left">
                         <p class="font-bold dark:text-gray-200 text-lg font-inter">32</p>
                         <p class="font-medium text-[#7F7D83] font-inter">Offer Posted</p>
                     </div>
-
+              
                     <div
                         class="right pr-2 pl-2 bg-green-100 w-fit rounded-lg flex items-center border border-green-300">
                         <span class="text-green-800 font-inter text-xl">+5.6%</span>
@@ -127,12 +130,41 @@
                 </div>
             </div>
         </div>
+         <div class="bg-white  dark:bg-gray-800 border border-[#D9D9DE] dark:border-gray-700 rounded-xl p-8 mb-12 ">
+            <span class="text-[#00373E] dark:text-gray-200  font-inter font-semibold text-lg block mb-5">Popular
+                Categories of Jobs </span>
+            <div class="h-[32rem] w-auto">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-8">
+            <div
+                class="flex-1  w-full  bg-white border dark:bg-gray-800 border-[#D9D9DE] dark:border-gray-700 rounded-xl  p-4 md:p-6">
+                <span class="text-[#00373E] dark:text-gray-200  font-inter font-semibold text-lg block mb-5">Income By
+                    Countries</span>
+
+                <div class="h-[32rem] w-full">
+                    <canvas id="bar-chart"></canvas>
+                </div>
+            </div>
+
+            <div
+            class="w-fit  bg-white border dark:bg-gray-800 border-[#D9D9DE] dark:border-gray-700 rounded-xl  p-4 md:p-6">
+                <span class="text-[#00373E] dark:text-gray-200  font-inter font-semibold text-lg block mb-5">Popular
+                    locations of
+                    Freelancers</span>
+                <div class="py-6" id="pie-chart"></div>
+            </div>
+
+
+        </div> 
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="../js/theme.js"></script>
-    <script src="../js/dashboard.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 
 </html>

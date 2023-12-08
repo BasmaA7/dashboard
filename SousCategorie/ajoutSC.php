@@ -1,22 +1,23 @@
 <?php 
 include "../connexion/conx.php"; 
 
-
 if(isset($_POST['submit'])){
-  $name=$_POST['ProjectTitle'];
-  $ds=$_POST['Description'];
-  $categorie=$_POST['CategorieID'];
-  $sql="insert into `project`(ProjectTitle,Description,CategorieID) 
-  values ('$name','$ds',$categorie)";
-  
-  $res=mysqli_query($conx,$sql);
+
+  $name=$_POST['SousCategoriesName'];
+ 
+
+  $sql="insert into `souscategorie`( SousCategoriesName)
+  values ('$name')";
+  $res= mysqli_query($conx,$sql);
+
   if($res){
-    $row=mysqli_fetch_assoc($res);
     echo 'DB insert successfully';
   }
   else{
-    die(mysqli_connect_error());
+    die(mysqli_connect_error($conx));
   }
+
+
 }
 
 
@@ -52,22 +53,10 @@ if(isset($_POST['submit'])){
    
    
  <div class="bg-white border-2 border-gray-500">
-   <form class="max-w-md mx-auto" method="post">
+<form class="max-w-md mx-auto" method="post">
   <div class="relative z-0 w-full mb-5 group border">
-      <input  name="ProjectTitle" type="text"  id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" Project Title " required />
+      <input  name="SousCategoriesName" type="text"  id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" SousCategoriesName " required />
       <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
-  </div>
-  <div class="relative z-0 w-full mb-5 group">
-      <textarea name="Description" type="text"  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" Descrition" required ></textarea>
-      <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
-  </div>
-  <div class="relative z-0 w-full mb-5 group">
-  <select name="CategorieID"  name="repeat_password" id="floating_repeat_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" Categorie Name"   >
-  <option value="volvo" classe= "text-gray-500" >Choisir Catégorie </option>
-  <option value="5">Bases de Données</option>
-  <option value="6">Web Development</option>
-  <option value="7">Graphic Design</option>
-</select>
   </div>
   
   

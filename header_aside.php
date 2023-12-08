@@ -1,3 +1,14 @@
+<?php 
+include("connexion/conx.php");
+session_start();
+$_SESSION['role']="admin";
+$_SESSION['role']="client";
+$_SESSION['role']="freelancer";
+?>
+
+
+
+
 <nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
         <div class="px-3 py-3 lg:px-5 lg:pl-3">
             <div class="flex items-center justify-between">
@@ -15,8 +26,8 @@
                         </svg>
                     </button>
 
-                    <a href="../src/index.html" class="flex ml-2 md:mr-24  items-center">
-                        <img src="../images/logo.webp" class="h-8 mr-6" alt="peoplepertask Logo" >
+                    <a href="src/index.php" class="flex ml-2 md:mr-24  items-center">
+                        <img src="images/logo.webp" class="h-8 mr-6" alt="peoplepertask Logo" >
                         <span class="font-inter font-semibold dark:text-white">PeaplePerTask</span>
                     </a>
                 </div>
@@ -84,6 +95,9 @@
                 </div>
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
     </nav>
 
     <aside id="logo-sidebar"
@@ -91,8 +105,12 @@
         aria-label="Sidebar">
         <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
             <ul class="space-y-2 font-medium">
+
+            <?php 
+              if ($_SESSION["role"]=='admin' || $_SESSION["role"]=='client' || $_SESSION["role"]=='freelancer'){
+                  ?>
                 <li>
-                    <a  href="/"
+              <a  href="../dashboard.php"
                         class="flex items-center p-2 text-white hover:text-gray-900 rounded-lg bg-orange-600  dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group ">
                         <svg class="w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                             width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -102,10 +120,12 @@
                         </svg>
                         <span class="ml-3 font-inter ">Dashboard</span>
                     </a>
+                
                 </li>
-
+    <?php } ?>
+                
                 <li>
-                    <a  href="../Afficher-fr.php"
+                    <a  href="freelancer/Afficher-fr.php"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -118,9 +138,29 @@
                         <span class="flex-1 ml-3 whitespace-nowrap font-inter">Freelancers</span>
                     </a>
                 </li>
-
+                <?php
+                  
+                  ?>
                 <li>
-                    <a  href="/"
+                <li>
+                    <a  href="User/Afficher-user.php"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M2.15845 13C3.04205 11.5262 4.97863 10.5175 7.99996 10.5175C11.0213 10.5175 12.9579 11.5262 13.8415 13M10.4 5.4C10.4 6.72548 9.32545 7.8 7.99996 7.8C6.67448 7.8 5.59996 6.72548 5.59996 5.4C5.59996 4.07452 6.67448 3 7.99996 3C9.32545 3 10.4 4.07452 10.4 5.4Z"
+                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                        </svg>
+
+                        <span class="flex-1 ml-3 whitespace-nowrap font-inter">Clients</span>
+                    </a>
+                </li>
+         <?php 
+              
+         ?> 
+             <li>
+                    <a  href="Projet/Afficher-projet.php"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
 
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -131,15 +171,13 @@
                                 stroke-linejoin="round" />
                         </svg>
 
-                        <span class="flex-1 ml-3 whitespace-nowrap font-inter">Order</span>
+                        <span class="flex-1 ml-3 whitespace-nowrap font-inter">Projets</span>
                     </a>
                 </li>
-
+ 
                 <li>
                     <a  href="/"
                         class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-
-
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -147,25 +185,34 @@
                                 stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                 stroke-linejoin="round" />
                         </svg>
-
-
-
                         <span class="flex-1 ml-3 whitespace-nowrap font-inter">Offers</span>
                     </a>
                 </li>
 
-                <li>
-                    <a  href="../src/signin.html"
-                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
-                        </svg>
-                        <span class="flex-1 ml-3 whitespace-nowrap font-inter">Sign In</span>
-                    </a>
-                </li>
+                
+        
 
+                <li>
+                <a href="#" 
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h9M5 9h5m8-8H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h4l3.5 4 3.5-4h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
+             </svg>
+             <span class="flex-1 ml-3 whitespace-nowrap font-inter">Témoignages </span>
+
+             </a>
+           </li>
+                <li>
+                <a href="logout.php" 
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h9M5 9h5m8-8H2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h4l3.5 4 3.5-4h5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
+             </svg>
+             <span class="flex-1 ml-3 whitespace-nowrap font-inter">log out </span>
+
+             </a>
+           </li>
             </ul>
         </div>
+      
     </aside>

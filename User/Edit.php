@@ -1,14 +1,13 @@
-   
+
  <?php include_once "../connexion/conx.php"; 
- $id=$_GET['updateID'];
+ $id=$_GET['editID'];
 if(isset($_POST['submit'])){
 
   $FullName=$_POST['FullName'];
   $password=$_POST['Password'];
   $email=$_POST['Email'];
 
-  $sql=" update  `user` set id=$id ,FullName='$FullName',Password='$password',Email='$email'";
-
+  $sql=" update  `user` set FullName='$FullName',Password='$password',Email='$email' where id=$id";
   $res=mysqli_query($conx,$sql);
   if($res){
     echo 'DB Edit successfully';

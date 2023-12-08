@@ -10,6 +10,8 @@ if(isset($_POST['submit'])){
   values ('$name')";
   $res=mysqli_query($conx,$sql);
 
+  
+
   if($res){
     echo 'DB insert success fully';
   }
@@ -47,7 +49,7 @@ if(isset($_POST['submit'])){
 
 <body class="dark:bg-gray-900">
 
-    <?php include "header_aside.php"; ?>
+    <?php include "../header_aside.php"; ?>
 
     <main class=" mt-14 p-12 ml-0 smXl:ml-64  dark:border-gray-700">
    
